@@ -21,6 +21,7 @@ export const upgrades: UpgradeModel[] = [
     purchased: false,
     applyUpgrade: (state) => ({
       ...state,
+      trees: state.trees,
       clicker: {
         ...state.clicker,
         mult: state.clicker.mult * 2,
