@@ -4,7 +4,7 @@ import { ShopUpgrade } from "./ShopUpgrade";
 import { useGameStore } from "@/state/useGame";
 import { useState, useCallback } from "react";
 import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 export default function Shop() {
   const trees = useGameStore((state) => state.trees);
@@ -24,7 +24,6 @@ export default function Shop() {
 
   const getWorkerCost = useGameStore((state) => state.getWorkerCost);
   const getMaxAffordable = useGameStore((state) => state.getMaxAffordable);
-  const clicker = useGameStore((state) => state.clicker);
   const buyClickerUpgrade = useGameStore((state) => state.buyClickerUpgrade);
   const getClickerCost = useGameStore((state) => state.getClickerCost);
 
