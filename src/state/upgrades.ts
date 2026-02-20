@@ -179,7 +179,7 @@ export const upgrades: UpgradeModel[] = [
 
   // --- Beatlekill Upgrades ---
   {
-    name: "Bug Spray",
+    name: "Bug Juice",
     description: "Beatlekills work 1.5x faster.",
     cost: 750000,
     purchased: false,
@@ -193,7 +193,7 @@ export const upgrades: UpgradeModel[] = [
     }),
   },
   {
-    name: "Pheromone Trap",
+    name: "Little Guitars",
     description: "Beatlekills work 1.5x faster.",
     cost: 3000000,
     purchased: false,
@@ -207,7 +207,7 @@ export const upgrades: UpgradeModel[] = [
     }),
   },
   {
-    name: "Genetic Modification",
+    name: "Genetic Engineering",
     description: "Beatlekills work 2x faster.",
     cost: 12000000,
     purchased: false,
