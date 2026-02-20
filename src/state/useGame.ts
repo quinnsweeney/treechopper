@@ -10,7 +10,7 @@ import { toast } from "sonner";
 const throttledStorage = (baseStorage: any) => {
   let timeout: any = null;
   let lastValue: string | null = null;
-  const SAVE_INTERVAL_MS = 5 * 60 * 1000;
+  const SAVE_INTERVAL_MS = 2 * 60 * 1000;
 
   return {
     getItem: (name: string) => {
