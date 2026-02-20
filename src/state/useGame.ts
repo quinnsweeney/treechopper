@@ -4,21 +4,47 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { workers } from "./workers";
 import { upgrades } from "./upgrades";
 
+import LZString from "lz-string";
+import { toast } from "sonner";
+
 const throttledStorage = (baseStorage: any) => {
   let timeout: any = null;
   let lastValue: string | null = null;
+  const SAVE_INTERVAL_MS = 5 * 60 * 1000;
 
   return {
-    getItem: (name: string) => baseStorage.getItem(name),
+    getItem: (name: string) => {
+      const item = baseStorage.getItem(name);
+      if (!item) return null;
+      try {
+        const decompressed = LZString.decompressFromUTF16(item);
+        // If decompression returns null/empty, fallback to raw item (for migration)
+        return decompressed || item;
+      } catch (e) {
+        return item;
+      }
+    },
     setItem: (name: string, value: string) => {
       lastValue = value;
       if (timeout) return;
+
       timeout = setTimeout(() => {
         if (lastValue !== null) {
-          baseStorage.setItem(name, lastValue);
+          try {
+            const compressed = LZString.compressToUTF16(lastValue);
+            baseStorage.setItem(name, compressed);
+            toast("Game Saved", {
+              description: "Your progress has been securely stored.",
+            });
+          } catch (e) {
+            console.error("Failed to compress/save game state", e);
+            toast.error("Save Failed", {
+              description: "Could not save game progress.",
+            });
+          }
         }
         timeout = null;
-      }, 1000); // Save at most once per second
+      }, SAVE_INTERVAL_MS);
     },
     removeItem: (name: string) => baseStorage.removeItem(name),
   };
