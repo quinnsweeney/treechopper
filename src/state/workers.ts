@@ -30,7 +30,7 @@ export const workers: WorkerModel[] = [
     baseCost: 12000,
   },
   {
-    name: "Beatlekill",
+    name: "Beetlekill",
     rate: 400,
     count: 0,
     mult: 1,

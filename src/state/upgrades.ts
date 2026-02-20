@@ -180,43 +180,43 @@ export const upgrades: UpgradeModel[] = [
   // --- Beatlekill Upgrades ---
   {
     name: "Bug Juice",
-    description: "Beatlekills work 1.5x faster.",
+    description: "Beetlekill work 1.5x faster.",
     cost: 750000,
     purchased: false,
-    workerName: "Beatlekill",
+    workerName: "Beetlekill",
     tier: 1,
     applyUpgrade: (state) => ({
       ...state,
       workers: state.workers.map((w) =>
-        w.name === "Beatlekill" ? { ...w, mult: w.mult * 1.5 } : w,
+        w.name === "Beetlekill" ? { ...w, mult: w.mult * 1.5 } : w,
       ),
     }),
   },
   {
     name: "Little Guitars",
-    description: "Beatlekills work 1.5x faster.",
+    description: "Beetlekill work 1.5x faster.",
     cost: 3000000,
     purchased: false,
-    workerName: "Beatlekill",
+    workerName: "Beetlekill",
     tier: 2,
     applyUpgrade: (state) => ({
       ...state,
       workers: state.workers.map((w) =>
-        w.name === "Beatlekill" ? { ...w, mult: w.mult * 1.5 } : w,
+        w.name === "Beetlekill" ? { ...w, mult: w.mult * 1.5 } : w,
       ),
     }),
   },
   {
     name: "Genetic Engineering",
-    description: "Beatlekills work 2x faster.",
+    description: "Beetlekill work 2x faster.",
     cost: 12000000,
     purchased: false,
-    workerName: "Beatlekill",
+    workerName: "Beetlekill",
     tier: 3,
     applyUpgrade: (state) => ({
       ...state,
       workers: state.workers.map((w) =>
-        w.name === "Beatlekill" ? { ...w, mult: w.mult * 2 } : w,
+        w.name === "Beetlekill" ? { ...w, mult: w.mult * 2 } : w,
       ),
     }),
   },
