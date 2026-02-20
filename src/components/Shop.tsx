@@ -2,7 +2,7 @@ import type { WorkerModel, UpgradeModel, BuyAmount } from "@/types";
 import { ShopWorker } from "./ShopWorker";
 import { ShopUpgrade } from "./ShopUpgrade";
 import { useGameStore } from "@/state/useGame";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
@@ -12,6 +12,16 @@ export default function Shop() {
   const upgrades = useGameStore((state) => state.upgrades);
   const buyWorker = useGameStore((state) => state.buyWorker);
   const buyUpgrade = useGameStore((state) => state.buyUpgrade);
+
+  /* Create stable callbacks */
+  const handleBuyWorker = useCallback((workerName: string, amount: number) => {
+    buyWorker(workerName, amount);
+  }, [buyWorker]);
+
+  const handleBuyUpgrade = useCallback((upgradeName: string) => {
+    buyUpgrade(upgradeName);
+  }, [buyUpgrade]);
+
   const getWorkerCost = useGameStore((state) => state.getWorkerCost);
   const getMaxAffordable = useGameStore((state) => state.getMaxAffordable);
   const clicker = useGameStore((state) => state.clicker);
@@ -80,7 +90,7 @@ export default function Shop() {
                     worker={w}
                     cost={currentCost}
                     amountToBuy={amountToBuy}
-                    onClick={() => buyWorker(w.name, amountToBuy)}
+                    onClick={() => handleBuyWorker(w.name, amountToBuy)}
                     canBuy={canBuy}
                   />
                 );
@@ -88,27 +98,6 @@ export default function Shop() {
 
           {activeTab === "UPGRADES" && (
             <>
-              {/* <div className="w-full h-full flex flex-col justify-between bg-card text-card-foreground rounded-xl border border-border shadow-sm">
-                <div className="p-4 space-y-1">
-                  <div className="flex justify-between items-center">
-                    <h3 className="font-semibold leading-none tracking-tight text-base truncate">Sharpen Axe</h3>
-                    <span className="text-sm font-bold bg-muted px-2 py-0.5 rounded-full">Lvl {clicker.level}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground line-clamp-2 h-8">
-                    Make your clicks 1.5x stronger!
-                  </p>
-                  <p className="text-xs font-mono text-muted-foreground">
-                    Cost: {getClickerCost().toLocaleString()}
-                  </p>
-                  <Button
-                    className="w-full h-8 text-xs mt-2"
-                    disabled={trees < getClickerCost()}
-                    onClick={buyClickerUpgrade}
-                  >
-                    Upgrade
-                  </Button>
-                </div>
-              </div> */}
               <Card className="w-full h-full flex flex-col justify-between">
                 <CardHeader className="p-4 space-y-1">
                   <CardTitle className="text-base leading-tight">Sharpen Axe</CardTitle>
@@ -151,7 +140,7 @@ export default function Shop() {
                   <ShopUpgrade
                     key={u.name}
                     upgrade={u}
-                    onClick={() => buyUpgrade(u.name)}
+                    onClick={() => handleBuyUpgrade(u.name)}
                     canBuy={trees >= u.cost && !u.purchased}
                   />
                 ))}

@@ -15,10 +15,18 @@ export function startGameLoop() {
   lastTimestamp = performance.now();
 
   const loop = (currentTimestamp: number) => {
-    const deltaTime = (currentTimestamp - lastTimestamp) / 1000; // Convert to seconds
+    const deltaTime = (currentTimestamp - lastTimestamp) / 1000;
+
+    // Cap update rate to ~30fps (33ms) to save CPU
+    if (currentTimestamp - lastTimestamp < 33) {
+      animationFrameId = requestAnimationFrame(loop);
+      return;
+    }
+
     lastTimestamp = currentTimestamp;
 
-    // Get current state and calculate trees to add
+    // ... logic ...
+
     const state = useGameStore.getState();
     const totalTreesPerSecond = state.workers.reduce(
       (sum, worker) => sum + getWorkerTreesPerSecond(worker),
